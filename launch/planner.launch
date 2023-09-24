@@ -1,0 +1,64 @@
+<launch>
+	<!-- planner args -->
+	<arg name="current_waypoint_topic" default="/current_waypoint"/>
+	<arg name="local_position_topic" default="/current_pose"/>
+	<arg name="cmd_vel_topic" default="/cmd_vel"/>
+	<arg name="current_status_topic" default="/planner_status"/>
+	<arg name="enabled_service" default="/planner_enabled"/>
+	<arg name="precision_service" default="/planner_precision"/>
+
+	<!-- pid controller args -->
+	<arg name="dist_prop_gain" default="1"/>
+	<arg name="dist_kp" default="1.5"/>
+	<arg name="dist_kd" default="0.0"/>
+	<arg name="dist_ki" default="0.1"/>
+	<arg name="theta_prop_gain" default="5"/>
+	<arg name="head_kp" default="1.0"/>
+	<arg name="head_kd" default="0.0"/>
+	<arg name="head_ki" default="0.0"/>
+
+	<!-- cmd_vel range args -->
+	<arg name="min_linear_speed" default="0"/>
+	<arg name="max_linear_speed" default="1"/>
+	<arg name="min_angular_speed" default="-1"/>
+	<arg name="max_angular_speed" default="1"/>
+
+	<!-- other args -->
+	<arg name="angle_threshold" default="45"/>
+	<arg name="default_precision" default="0.5"/>
+	<arg name="update_frequency" default="10"/>
+	<arg name="not_moving_threshold" default=".25"/>
+	<arg name="not_moving_delay" default="5"/>
+	<arg name="stuck_delay" default="3"/>
+
+	<node pkg="pid_path_planner" name="pid_path_planner"
+	type="pid_planner.py" output="screen" respawn="false">
+		<param name="current_waypoint_topic" value="$(arg current_waypoint_topic)"/>
+		<param name="local_position_topic" value="$(arg local_position_topic)"/>
+		<param name="cmd_vel_topic" value="$(arg cmd_vel_topic)"/>
+		<param name="current_status_topic" value="$(arg current_status_topic)"/>
+		<param name="enabled_service" value="$(arg enabled_service)"/>
+		<param name="precision_service" value="$(arg precision_service)"/>
+
+		<param name="dist_prop_gain" value="$(arg dist_prop_gain)"/>
+		<param name="dist_kp" value="$(arg dist_kp)"/>
+		<param name="dist_kd" value="$(arg dist_kd)"/>
+		<param name="dist_ki" value="$(arg dist_ki)"/>
+		<param name="theta_prop_gain" value="$(arg theta_prop_gain)"/>
+		<param name="head_kp" value="$(arg head_kp)"/>
+		<param name="head_kd" value="$(arg head_kd)"/>
+		<param name="head_ki" value="$(arg head_ki)"/>
+
+		<param name="min_linear_speed" value="$(arg min_linear_speed)"/>
+		<param name="max_linear_speed" value="$(arg max_linear_speed)"/>
+		<param name="min_angular_speed" value="$(arg min_angular_speed)"/>
+		<param name="max_angular_speed" value="$(arg max_angular_speed)"/>
+
+		<param name="angle_threshold" value="$(arg angle_threshold)"/>
+		<param name="default_precision" value="$(arg default_precision)"/>
+		<param name="update_frequency" value="$(arg update_frequency)"/>
+		<param name="not_moving_threshold" value="$(arg not_moving_threshold)"/>
+		<param name="not_moving_delay" value="$(arg not_moving_delay)"/>
+		<param name="stuck_delay" value="$(arg stuck_delay)"/>
+	</node>
+</launch>
